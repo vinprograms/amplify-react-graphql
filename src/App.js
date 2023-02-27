@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
-import { API } from "aws-amplify";
 import { API, Storage } from 'aws-amplify';
 import {
   Button,
@@ -71,12 +70,18 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>My Notes App</Heading>
+      <Heading level={1}>Simple Data App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          <TextField
+		  <View
+		  name="image"
+		  as="input"
+		  type="file"
+		  style={{ alignSelf: "end" }}
+		  />
+		  <TextField
             name="name"
-            placeholder="Note Name"
+            placeholder="Measurement"
             label="Note Name"
             labelHidden
             variation="quiet"
@@ -84,24 +89,18 @@ const App = ({ signOut }) => {
           />
           <TextField
             name="description"
-            placeholder="Note Description"
+            placeholder="Value"
             label="Note Description"
             labelHidden
             variation="quiet"
             required
           />
           <Button type="submit" variation="primary">
-            Create Note
+            Add Data
           </Button>
         </Flex>
       </View>
-      <Heading level={2}>Current Notes</Heading>
-	  <View
-	  name="image"
-	  as="input"
-	  type="file"
-	  style={{ alignSelf: "end" }}
-		/>
+      <Heading level={2}>Stored Data</Heading>
       <View margin="3rem 0">
         {notes.map((note) => (
 		  <Flex
@@ -122,7 +121,7 @@ const App = ({ signOut }) => {
 			  />
 			)}
 			<Button variation="link" onClick={() => deleteNote(note)}>
-			  Delete note
+			  Delete entry
 			</Button>
 		  </Flex>
 		))}
